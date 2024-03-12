@@ -1,0 +1,15 @@
+certifi
+charset-normalizer
+click
+flask
+flask-cors
+idna
+itsdangerous
+jinja2
+markupsafe
+pymongo
+requests
+werkzeug
+six
+urllib3
+

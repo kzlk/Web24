@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  frontend:
+    image: kzlk/kzlk
+    # build: frontend/
+    ports:
+      - "3000:3000"
+
+  backend:
+    image: kzlk/back
+    # build: backend/
+    ports:
+      - "5001:5001"
+
+
+  db:
+    image: mongo
+    container_name: mongodb
+    ports:
+      - "5000:27017"
+    volumes:
+      - mongodb_data:/data/db
+
+volumes:
+  mongodb_data:
+    driver: local # Create data on local file system

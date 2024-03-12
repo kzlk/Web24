@@ -1,0 +1,51 @@
+h1 {
+  color: #efea3f;
+  font-weight: bold;
+  font-size: xxx-large;
+  font-family: Helvetica;
+  text-align: center;
+}
+
+h2 {
+  margin-bottom: 5px;
+}
+
+div.post {
+  margin: 0 50px 0 50px;
+}
+
+div.block {
+  border-radius: 15px; /* Rounded corners */
+  background-color: #f0f0f0; /* Background color */
+  padding: 20px; /* Add padding for spacing */
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+}
+
+p.author {
+  font-style: italic;
+}
+
+p.body {
+  margin-top: 0px;
+}
+
+div.center {
+  text-align: center;
+}
+
+.title-block {
+  text-align: right;
+  margin-bottom: 10px; /* Adjust spacing */
+}
+
+div.right {
+  text-align: right;
+}
+
+.padRight {
+  margin-right: 10px;
+}
+
+.space {
+  margin: 0 10px 0 10px;
+}
