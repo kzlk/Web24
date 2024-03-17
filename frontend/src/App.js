@@ -7,8 +7,8 @@ function DeleteButton(props) {
   var request = {
     'method': 'DELETE',
     'body': JSON.stringify({
-      'database': 'TodoDB',
-      'collection': 'todos',
+      'database': 'BlogDB',
+      'collection': 'posts',
       'Filter': {
         'title': props.title,
         'author': props.author,
@@ -18,7 +18,7 @@ function DeleteButton(props) {
   }
   const buttonClicked = () => {
     console.log(request);
-    fetch('http://localhost:5001/mongodb', request)
+    fetch('https://webback.azurewebsites.net/mongodb', request)
       .then(res => res.json())
       .then(json => console.log(json));
     window.location.reload();
@@ -29,7 +29,7 @@ function DeleteButton(props) {
   )
 }
 
-function Todo(props) { 
+function Blog(props) {
   return (
     <div class="post">
       <hr></hr>
@@ -53,6 +53,8 @@ function Todo(props) {
       <p class="body">{props.posts} </p>
     </div>);
 }
+
+
 
 class EditModal extends React.Component {
   constructor(props) {
@@ -105,8 +107,8 @@ class EditModal extends React.Component {
       var request = {
         'method': 'POST',
         'body': JSON.stringify({
-          'database': 'TodoDB',
-          'collection': 'todos',
+          'database': 'BlogDB',
+          'collection': 'posts',
           'Document': {
             'title': this.state.title,
             'author': this.state.author,
@@ -119,8 +121,8 @@ class EditModal extends React.Component {
       var request = {
         'method': 'PUT',
         'body': JSON.stringify({
-          'database': 'TodoDB',
-          'collection': 'todos',
+          'database': 'BlogDB',
+          'collection': 'posts',
           'Filter': {
             'title': this.state.oldTitle,
             'author': this.state.oldAuthor,
@@ -137,7 +139,7 @@ class EditModal extends React.Component {
       }
     }
     console.log(request);
-    fetch('http://localhost:5001/mongodb', request)
+    fetch('https://webback.azurewebsites.net/mongodb', request)
       .then(res => res.json())
       .then(json => console.log(json));
     window.location.reload();
@@ -153,7 +155,7 @@ class EditModal extends React.Component {
         <Modal isOpen={this.state.show} onRequestClose={this.hideModal}>
           <form onSubmit={this.handleSubmit}>
             <div class="center">
-              <label class="space">Enter your task:
+              <label class="space">Enter your name:
                 <input
                   type="text"
                   name="author"
@@ -162,7 +164,7 @@ class EditModal extends React.Component {
                   onChange={this.handleChange}
                 />
               </label>
-              <label class="space"> Enter the tag of task:
+              <label class="space"> Enter the title of your post:
                 <input
                   type="text"
                   name="title"
@@ -182,7 +184,7 @@ class EditModal extends React.Component {
               </label>
             </div>
             <div class="center">
-              <label class="space">Enter title of task:
+              <label class="space">Enter your post body:
                 <input
                   type="text"
                   name="body"
@@ -202,13 +204,14 @@ class EditModal extends React.Component {
   }
 }
 
+
 class App extends React.Component {
   state = {
     isLoading: true
   };
 
   componentDidMount() {
-    fetch('http://localhost:5001/mongodb', {
+    fetch('https://webback.azurewebsites.net/mongodb', {
       'methods':
         'GET'
     })
@@ -244,10 +247,10 @@ class App extends React.Component {
         </div>
         <Container>
           {this.state.items.map(item =>
-            <Todo title={item.title}
+            <Blog title={item.title}
               author={item.author}
               date={item.date}
-              posts={item.posts}></Todo>
+              posts={item.posts}></Blog>
           )}
         </Container>
       </div>

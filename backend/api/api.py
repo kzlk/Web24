@@ -1,27 +1,25 @@
 from flask import Flask, request, json, Response
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 from pymongo import MongoClient
-# MONGO_URL = "mongodb+srv://new_user_7:q1w2e3r4A6@cluster0.njikoyn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-MONGO_URL = "mongodb://host.docker.internal:5000/"
+import certifi
+ca = certifi.where()
+
+
+MONGO_URL = "mongodb+srv://new_user_7:<password>@cluster0.njikoyn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 
 class MongoAPI:
     def __init__(self, data):
         self.client = MongoClient(MONGO_URL)
 
-        database = 'TodoDB'
-        collection = 'todos'
+        database = 'BlogDB'
+        collection = 'posts'
         cursor = self.client[database]
         self.collection = cursor[collection]
         self.data = data
-        try:
-            self.client.admin.command('ping')
-            print("Pinged your deployment. You successfully connected to MongoDB!")
-        except Exception as e:
-            print(e)
 
     def read(self):
         documents = self.collection.find()
-        output = {"todos":[{item: data[item] for item in data if item != '_id'} for data in documents]}
+        output = {"articles":[{item: data[item] for item in data if item != '_id'} for data in documents]}
         return output
     
     def write(self, data):
@@ -45,16 +43,20 @@ class MongoAPI:
         return output
 
 app = Flask(__name__)
-CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 @app.route('/')
+@cross_origin()
 def base():
-    return Response(response=json.dumps({"Status": "UP"}),
+    print("Hello World")
+    return Response(response=json.dumps({"Status": "UP Kozliuk's API is running!"}),
             status=200,
             mimetype='application/json')
 
 @app.route('/mongodb', methods=['GET'])
+@cross_origin()
 def mongo_read():
+    print("Hello World")
     data = request.json
     obj1 = MongoAPI(data) 
     response = obj1.read()
@@ -63,6 +65,7 @@ def mongo_read():
             mimetype='application/json')
 
 @app.route('/mongodb', methods=['POST'])
+@cross_origin()
 def mongo_write():
     data = json.loads(request.data.decode('utf8'))
     print(data)
@@ -78,6 +81,7 @@ def mongo_write():
             mimetype='application/json')
 
 @app.route('/mongodb', methods=['PUT'])
+@cross_origin()
 def mongo_update():
     data = json.loads(request.data.decode('utf8'))
     print(data)
@@ -92,6 +96,7 @@ def mongo_update():
                     mimetype='application/json')
 
 @app.route('/mongodb', methods=['DELETE'])
+@cross_origin()
 def mongo_delete():
     data = json.loads(request.data.decode('utf8'))
     # print(jsonObj)

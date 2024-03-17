@@ -2,26 +2,33 @@ version: '3'
 
 services:
   frontend:
-    image: kzlk/kzlk
-    # build: frontend/
+    # image: kzlk/frontend1
+    build: frontend/
     ports:
       - "3000:3000"
 
   backend:
-    image: kzlk/back
-    # build: backend/
+    # image: kzlk/back4
+    build: backend/
     ports:
       - "5001:5001"
+    networks:
+      - common-net
 
 
   db:
     image: mongo
     container_name: mongodb
     ports:
-      - "5000:27017"
+      - "27017:27017"
     volumes:
       - mongodb_data:/data/db
+    networks:
+      - common-net
 
 volumes:
   mongodb_data:
     driver: local # Create data on local file system
+
+networks:
+  common-net: {}
